@@ -6,26 +6,26 @@ export default function TodoHeader({ setTodoItems, user }) {
 
   const addNewItem = () => {
     if (newItem.length < 3) return; //checks for valid entry
-    const newTodoItem ={
-        uid: user.uid,
-        title: newItem,
-    }
+    const newTodoItem = {
+      uid: user.uid,
+      title: newItem,
+    };
     fetch(`https://chekov-api-ad.web.app/tasks/${user.uid}`, {
-        method: 'POST',
-        headers: {
-            'Content-type': 'application/json',
-        },
-        body: JSON.stringify(newTodoItem),
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(newTodoItem),
     })
-    .then(res=> res.json())
-    .then(setTodoItems)
-    .catch(alert)
-    .finally(()=> setNewItem('')) //clear the input box
+      .then((res) => res.json())
+      .then(setTodoItems)
+      .catch(alert)
+      .finally(() => setNewItem("")); //clear the input box
   };
   return (
     <HStack space={2}>
       <Input
-      value={newItem}
+        value={newItem}
         onChangeText={setNewItem}
         size="lg"
         color="coolGray.200"

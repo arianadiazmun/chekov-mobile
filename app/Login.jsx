@@ -22,7 +22,7 @@ export default function Login({ setUser }) {
       })
       .catch((err) => alert(err.message));
   };
-  
+
   return (
     <Center w="100%">
       <Box safeArea p={2} py={8} w="90%" maxW={290}>
