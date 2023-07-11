@@ -7,8 +7,22 @@ import {
   Input,
   Button,
 } from "native-base";
+import { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "./fbConfig.js";
 
-export default function Login() {
+export default function Login({ setUser }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = () => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((response) => {
+        setUser(response.user);
+      })
+      .catch((err) => alert(err.message));
+  };
+  
   return (
     <Center w="100%">
       <Box safeArea p={2} py={8} w="90%" maxW={290}>
@@ -22,6 +36,7 @@ export default function Login() {
           <FormControl isRequired>
             <FormControl.Label color="coolGray.300">Email</FormControl.Label>
             <Input
+              onChange={setEmail}
               size="lg"
               color="coolGray.200"
               placeholder="example@email.com"
@@ -29,9 +44,14 @@ export default function Login() {
           </FormControl>
           <FormControl isRequired>
             <FormControl.Label color="coolGray.300">Password</FormControl.Label>
-            <Input size="lg" color="coolGray.200" type="password" />
+            <Input
+              onChange={setPassword}
+              size="lg"
+              color="coolGray.200"
+              type="password"
+            />
           </FormControl>
-          <Button mt={3} colorScheme="primary">
+          <Button onPress={handleLogin} mt={3} colorScheme="primary">
             Sign In
           </Button>
         </VStack>
